@@ -24,11 +24,15 @@
         }else{
             to_ = to.value;
         }
-
+        if(amount.value<1){
+            var amount_=1;
+        }else{
+            amount_=amount.value;
+        }
         var u = new URL('convert',baseUrl);
         u.searchParams.append('from',from_);
         u.searchParams.append('to',to_);
-        u.searchParams.append('amount', amount.value ?? 1 );
+        u.searchParams.append('amount', amount_ );
 
         fetch(u, { method: 'GET', redirect: 'follow'} )
             .then(response => response.json())
