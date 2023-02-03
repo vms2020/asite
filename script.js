@@ -12,17 +12,10 @@
     const baseUrl = 'https://api.exchangerate.host';
 
     calculate.addEventListener('click', () => {
-        console.log(`from === ${from.value} - this is ${from.value === "from"}`);
-        console.log(`to === ${to.value} - this is ${to.value === "to"}`);
-        if(amount.value<1){
-            var amount_=1;
-        }else{
-            amount_=amount.value;
-        }
         var u = new URL('convert',baseUrl);
         u.searchParams.append('from',from.value === 'from' ? 'USD' : from.value);
         u.searchParams.append('to',to.value === 'to' ? 'GBP' : to.value );
-        u.searchParams.append('amount', amount_ );
+        u.searchParams.append('amount', amount.value || 1 );
 
         fetch(u, { method: 'GET', redirect: 'follow'} )
             .then(response => response.json())
