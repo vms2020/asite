@@ -1,28 +1,33 @@
 (() => {
     
-    var from = document.getElementById('from').value;
-    if(from === "from"){
-        from = 'USD';
-    }
-    var to = document.getElementById('to').value;
-    console.log(`to === ${to} - this is ${to === "to"}`);
-    if(to === "to"){
-        to = 'GBP';
-    }
+    const from = document.getElementById('from');
+    const to = document.getElementById('to');
+    console.log(`to === ${to.value} - this is ${to.value === "to"}`);
     const amount = document.getElementById('amount');
     const calculate = document.getElementById('calculate');
     const result = document.getElementById('result');
 
-    console.log(`from: ${from}\nto: ${to}\namount: ${amount.value}\n`);
+    console.log(`from: ${from.value}\nto: ${to.value}\namount: ${amount.value}\n`);
 
     const baseUrl = 'https://api.exchangerate.host';
 
     calculate.addEventListener('click', () => {
-        console.log(to);
-        
+        console.log(to.value);
+        if(from.value === "from"){
+           var from_ = 'USD';
+        }else{
+            from_ = from.value;
+        }
+        console.log(`to === ${to.value} - this is ${to.value === "to"}`);
+        if(to.value === "to"){
+            var to_ = 'GBP';
+        }else{
+            to_ = to.value;
+        }
+
         var u = new URL('convert',baseUrl);
-        u.searchParams.append('from',from);
-        u.searchParams.append('to',to);
+        u.searchParams.append('from',from_);
+        u.searchParams.append('to',to_);
         u.searchParams.append('amount', amount.value ?? 1 );
 
         fetch(u, { method: 'GET', redirect: 'follow'} )
@@ -35,7 +40,7 @@
                 } else {
                     console.log(JSON.stringify(rejson, null, 4));
                     console.log("SUCCESS!!!!!!!!");
-                    result.innerHTML = `Result : ${rejson.result} ${from} <br><pre> ${JSON.stringify(rejson, null, 4)} </pre>`;
+                    result.innerHTML = `Result : ${rejson.result} ${from_} <br><pre> ${JSON.stringify(rejson, null, 4)} </pre>`;
 
                     //result.innerHTML = `Result : ${rejson.result}`
                 }
