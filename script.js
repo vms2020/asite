@@ -12,26 +12,16 @@
     const baseUrl = 'https://api.exchangerate.host';
 
     calculate.addEventListener('click', () => {
-        console.log(to.value);
-        if(from.value === "from"){
-           var from_ = 'USD';
-        }else{
-            from_ = from.value;
-        }
+        console.log(`from === ${from.value} - this is ${from.value === "from"}`);
         console.log(`to === ${to.value} - this is ${to.value === "to"}`);
-        if(to.value === "to"){
-            var to_ = 'GBP';
-        }else{
-            to_ = to.value;
-        }
         if(amount.value<1){
             var amount_=1;
         }else{
             amount_=amount.value;
         }
         var u = new URL('convert',baseUrl);
-        u.searchParams.append('from',from_);
-        u.searchParams.append('to',to_);
+        u.searchParams.append('from',from.value === 'from' ? 'USD' : from.value);
+        u.searchParams.append('to',to.value === 'to' ? 'GBP' : to.value );
         u.searchParams.append('amount', amount_ );
 
         fetch(u, { method: 'GET', redirect: 'follow'} )
@@ -44,7 +34,7 @@
                 } else {
                     console.log(JSON.stringify(rejson, null, 4));
                     console.log("SUCCESS!!!!!!!!");
-                    result.innerHTML = `Result : ${rejson.result} ${from_} <br><pre> ${JSON.stringify(rejson, null, 4)} </pre>`;
+                    result.innerHTML = `Result : ${rejson.result} ${from.value === 'from' ? 'USD' : from.value} <br><pre> ${JSON.stringify(rejson, null, 4)} </pre>`;
 
                     //result.innerHTML = `Result : ${rejson.result}`
                 }
